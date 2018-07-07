@@ -1,6 +1,15 @@
 import React from 'react';
-import {Text, View, Image, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+    Text, 
+    View, 
+    Image, 
+    TouchableOpacity, 
+    Button,
+    TextInput, 
+    StyleSheet 
+} from 'react-native';
 
+import FormRow from '../components/FormRow'
 
 export default class LoginPage extends React.Component {
     render() {
@@ -13,13 +22,27 @@ export default class LoginPage extends React.Component {
                         source={require('../assets/img/lock.png')} />
                 </View>
                 <View style={styles.cardLogin} >
-                   <Text style={styles.textItem} > Login </Text>
-                   <View style={styles.labelView}>
-                        <Text style={styles.label} > Email </Text>
-                        <Text style={styles.label} > Senha </Text>
-                   </View>
+                        <Text style={styles.textItem} > Login </Text>
+                        <FormRow>
+                            <TextInput
+                                style={styles.inputLogin}
+                                placeholder="user@mail.com" />
+                        </FormRow>
+                        <FormRow>
+                            <TextInput
+                                style={styles.inputLogin}
+                                secureTextEntry
+                                placeholder="*********" />
+                        </FormRow>
+
+                        <TouchableOpacity 
+                            style={ styles.buttonLogin }
+                            onPress={ ()=> console.log('Entrar') }
+                            underlayColor="#FFF" >
+                            <Text style={styles.buttonLoginText} >Entrar</Text>
+                        </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => console.log('clicou!')} style={styles.cardFooter} >
+                <TouchableOpacity onPress={() => console.log('cadastrar!')} style={styles.cardFooter} >
                     <Text style={styles.textFooter} >Cadastrar-se</Text>
                 </TouchableOpacity>
             </View>
@@ -42,8 +65,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#C1C1C1',
         elevation: 1,
-        height: 150,
-        flex: 9,
+        flex: 10,
         zIndex: 0,
     },
     cardFooter: {
@@ -55,15 +77,15 @@ const styles = StyleSheet.create({
         borderTopColor: '#E2E2E2',
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
-        marginBottom: 100,
+        marginBottom: 60,
         alignItems: 'center',
         flex: 1,
         elevation: 1,
     },
     cardImage: {
-        zIndex: 1,
+        zIndex: 2,
         elevation: 1,
-        marginTop: 80,
+        marginTop: 20,
     },
     imageLock: {
         width: 80,
@@ -82,10 +104,20 @@ const styles = StyleSheet.create({
         color: '#919191',
         alignSelf: 'center',
     },
-    labelView: {
-        marginTop: 30,
+    inputLogin: {
+        padding: 10
     },
-    label: {
-        marginTop: 10,
+    buttonLogin: {
+        backgroundColor: '#00aeef',
+        marginHorizontal: 50,
+        marginTop: 30,
+        padding: 10,
+        borderRadius: 5,
+    },
+    buttonLoginText: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        fontSize: 18,
+        alignSelf: 'center',
     }
 });
