@@ -4,9 +4,12 @@ import {
     View, 
     Image, 
     TouchableOpacity,
+    ActivityIndicator,
     TextInput, 
+    Alert,
     StyleSheet 
 } from 'react-native';
+import firebase from 'firebase';
 
 import FormRow from '../components/FormRow'
 
@@ -17,8 +20,22 @@ export default class LoginPage extends React.Component {
         
         this.state = {
             mail: '',
-            password: '' 
+            password: '',
+            isLoading: false,
+            message: ''
         }
+    }
+
+    componentDidMount() {
+        const config = {
+            apiKey: "AIzaSyA_mDbS7miX7bw7hXjowDP2IVBC2PrCd34",
+            authDomain: "series-a5fb2.firebaseapp.com",
+            databaseURL: "https://series-a5fb2.firebaseio.com",
+            projectId: "series-a5fb2",
+            storageBucket: "series-a5fb2.appspot.com",
+            messagingSenderId: "384979480160"
+          };
+        firebase.initializeApp(config);
     }
 
     onChangeHandler(field, value) {
@@ -27,8 +44,94 @@ export default class LoginPage extends React.Component {
         });
     } 
     tryLogin() {
-        console.log(this.state);
+        this.setState({isLoading: true, message: ''});
+        const { mail, password } = this.state;
+
+        const loginUserSucess = user => {
+            this.setState({
+                mail: '',
+                password: '',
+                message: ''
+            });
+            this.props.navigation.navigate('Main');
+        }
+
+        const loginUserFailed = error => {
+            this.setState({
+                message: this.getMessageByErrorCode(error.code)
+            });
+        }
+
+        firebase.auth()
+            .signInWithEmailAndPassword( mail, password )
+            .then( loginUserSucess )
+            .catch(error => {
+
+            if (error.code === 'auth/user-not-found') {
+                Alert.alert(
+                    'Usuário não encontrado',
+                    'Deseja se cadastrar com essas informações',
+                    [{
+                        text: 'Não',
+                        onPress: () => {},
+                        style: 'cancel' //IOS
+                    }, {
+                        text: 'Sim',
+                        onPress: () => {
+                            this.setState({isLoading: true});
+                            firebase.auth()
+                                .createUserWithEmailAndPassword(mail, password)
+                                .then( loginUserSucess )
+                                .catch( loginUserFailed )
+                                .then(() =>  this.setState({isLoading: false}));
+                                
+                        }
+                    }],
+                    { cancelable: false }
+                )
+                return ;
+            } 
+            loginUserFailed(error);              
+        })
+        .then(() => this.setState({isLoading: false}));
     } 
+
+    getMessageByErrorCode(errorCode) {
+        switch(errorCode) {
+            case 'auth/invalid-email':
+                return 'E-mail inválido';
+            case 'auth/user-disabled':
+                return 'Usuário não permitido';
+            case 'auth/wrong-password':
+                return 'Senha incorreta';
+        }
+    }
+
+    renderButton() {
+        if(this.state.isLoading)
+            return <ActivityIndicator color="#FFFFFF" style={ styles.buttonLogin } />
+        return (
+            <TouchableOpacity 
+                style={ styles.buttonLogin }
+                onPress={ ()=> this.tryLogin() }
+                underlayColor="#FFF" >
+                <Text style={styles.buttonLoginText} >Entrar</Text>
+            </TouchableOpacity>
+        );
+    }
+    renderMessage() {
+        const { message } = this.state;
+
+        if(!message)
+            return null;
+        
+        return (
+            <View style={styles.errorDiv}>
+                <Text style={styles.errorText}>{ message }</Text>
+            </View>
+        );
+
+    }
 
     render() {
         return (
@@ -50,19 +153,15 @@ export default class LoginPage extends React.Component {
                         </FormRow>
                         <FormRow last>
                             <TextInput
-                                value={this.state.value}
+                                value={this.state.password}
                                 onChangeText={value => this.onChangeHandler('password', value)}
                                 style={styles.inputLogin}
                                 secureTextEntry
                                 placeholder="*********" />
                         </FormRow>
-
-                        <TouchableOpacity 
-                            style={ styles.buttonLogin }
-                            onPress={ ()=> this.tryLogin() }
-                            underlayColor="#FFF" >
-                            <Text style={styles.buttonLoginText} >Entrar</Text>
-                        </TouchableOpacity>
+                        { this.renderMessage() }
+                        { this.renderButton() }
+                       
                 </View>
                 <TouchableOpacity onPress={() => console.log('cadastrar!')} style={styles.cardFooter} >
                     <Text style={styles.textFooter} >Cadastrar-se</Text>
@@ -132,7 +231,7 @@ const styles = StyleSheet.create({
     buttonLogin: {
         backgroundColor: '#00aeef',
         marginHorizontal: 50,
-        marginTop: 30,
+        marginTop: 10,
         padding: 10,
         borderRadius: 5,
     },
@@ -141,5 +240,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 18,
         alignSelf: 'center',
+    },
+    errorDiv: {
+        marginVertical: 5,
+    },
+    errorText: {
+        alignSelf: 'center',
+        color: '#FF0000',
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 });

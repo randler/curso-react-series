@@ -9,8 +9,14 @@ export default createStackNavigator({
             title: "Bem vindo!",
         }
     },
-    'Home': {
+    'Main': {
         screen: HomePage,
+        navigationOptions: {
+            headerTitleStyle: {
+                color: '#2e333d',
+                fontSize: 30,
+            }
+        }
     },
 }, {
   navigationOptions: {
