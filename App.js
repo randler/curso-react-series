@@ -1,14 +1,17 @@
 import { createStackNavigator } from 'react-navigation';
 
 import LoginPage from './src/pages/LoginPage';
-
+import HomePage from './src/pages/HomePage';
 export default createStackNavigator({
-  'Login': {
-      screen: LoginPage,
-      navigationOptions: {
-          title: "Bem vindo!",
-      }
-  }
+    'Login': {
+        screen: LoginPage,
+        navigationOptions: {
+            title: "Bem vindo!",
+        }
+    },
+    'Home': {
+        screen: HomePage,
+    },
 }, {
   navigationOptions: {
       title: 'Series',

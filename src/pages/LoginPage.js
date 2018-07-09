@@ -3,8 +3,7 @@ import {
     Text, 
     View, 
     Image, 
-    TouchableOpacity, 
-    Button,
+    TouchableOpacity,
     TextInput, 
     StyleSheet 
 } from 'react-native';
@@ -12,6 +11,25 @@ import {
 import FormRow from '../components/FormRow'
 
 export default class LoginPage extends React.Component {
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            mail: '',
+            password: '' 
+        }
+    }
+
+    onChangeHandler(field, value) {
+        this.setState({
+            [field]: value
+        });
+    } 
+    tryLogin() {
+        console.log(this.state);
+    } 
+
     render() {
         return (
             <View style={styles.container} >
@@ -23,13 +41,17 @@ export default class LoginPage extends React.Component {
                 </View>
                 <View style={styles.cardLogin} >
                         <Text style={styles.textItem} > Login </Text>
-                        <FormRow>
+                        <FormRow first>
                             <TextInput
+                                value={this.state.mail}
+                                onChangeText={value => this.onChangeHandler('mail', value)}
                                 style={styles.inputLogin}
                                 placeholder="user@mail.com" />
                         </FormRow>
-                        <FormRow>
+                        <FormRow last>
                             <TextInput
+                                value={this.state.value}
+                                onChangeText={value => this.onChangeHandler('password', value)}
                                 style={styles.inputLogin}
                                 secureTextEntry
                                 placeholder="*********" />
@@ -37,7 +59,7 @@ export default class LoginPage extends React.Component {
 
                         <TouchableOpacity 
                             style={ styles.buttonLogin }
-                            onPress={ ()=> console.log('Entrar') }
+                            onPress={ ()=> this.tryLogin() }
                             underlayColor="#FFF" >
                             <Text style={styles.buttonLoginText} >Entrar</Text>
                         </TouchableOpacity>
