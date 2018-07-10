@@ -5,7 +5,10 @@ import { View, StyleSheet } from 'react-native';
 const FormRow = props => {
     const { children, first, last } = props
     return (
-        <View style={[styles.container, first ? styles.first : null, last ? styles.last : null]}>
+        <View style={[styles.container, 
+                        first ? styles.first : null,
+                        last ? styles.last : null
+                    ]}>
             {children}
         </View>
     )

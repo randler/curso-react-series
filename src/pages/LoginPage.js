@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Text, 
     View, 
-    Image, 
     TouchableOpacity,
     ActivityIndicator,
     TextInput, 
@@ -12,6 +11,7 @@ import {
 import firebase from 'firebase';
 
 import FormRow from '../components/FormRow'
+import CardStyle from '../components/CardStyle';
 
 export default class LoginPage extends React.Component {
 
@@ -36,6 +36,7 @@ export default class LoginPage extends React.Component {
             messagingSenderId: "384979480160"
           };
         firebase.initializeApp(config);
+        
     }
 
     onChangeHandler(field, value) {
@@ -124,25 +125,18 @@ export default class LoginPage extends React.Component {
 
         if(!message)
             return null;
-        
+
         return (
             <View style={styles.errorDiv}>
                 <Text style={styles.errorText}>{ message }</Text>
             </View>
         );
-
     }
 
     render() {
         return (
             <View style={styles.container} >
-
-                <View style={styles.cardImage} >
-                   <Image
-                        style={styles.imageLock} 
-                        source={require('../assets/img/lock.png')} />
-                </View>
-                <View style={styles.cardLogin} >
+                <CardStyle imagem="login">
                         <Text style={styles.textItem} > Login </Text>
                         <FormRow first>
                             <TextInput
@@ -162,8 +156,8 @@ export default class LoginPage extends React.Component {
                         { this.renderMessage() }
                         { this.renderButton() }
                        
-                </View>
-                <TouchableOpacity onPress={() => console.log('cadastrar!')} style={styles.cardFooter} >
+                </CardStyle>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Register')} style={styles.cardFooter} >
                     <Text style={styles.textFooter} >Cadastrar-se</Text>
                 </TouchableOpacity>
             </View>
@@ -176,19 +170,6 @@ const styles = StyleSheet.create({
         padding: 5,
         flex: 1
     },
-    cardLogin: {
-        marginTop: -40,
-        backgroundColor: '#FFF',
-        marginHorizontal: 30,
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        padding: 5,
-        borderWidth: 1,
-        borderColor: '#C1C1C1',
-        elevation: 1,
-        flex: 10,
-        zIndex: 0,
-    },
     cardFooter: {
         backgroundColor: '#F2F2F2',
         padding: 10,
@@ -200,19 +181,7 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5,
         marginBottom: 60,
         alignItems: 'center',
-        flex: 1,
         elevation: 1,
-    },
-    cardImage: {
-        zIndex: 2,
-        elevation: 1,
-        marginTop: 20,
-    },
-    imageLock: {
-        width: 80,
-        height: 80,
-        zIndex: 2,
-        alignSelf: 'center',
     },
     textItem: {
         marginTop: 40,
