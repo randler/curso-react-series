@@ -75,6 +75,8 @@ export default class Register extends React.Component {
                 return 'Operação não permitida';
             case 'auth/weak-password':
                 return 'Senha fraca';
+            default:
+                return errorCode;
         }
     }
 

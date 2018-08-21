@@ -10,10 +10,14 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 
+import { connect } from 'react-redux';
+
+import { tryLogin } from '../actions';
+
 import FormRow from '../components/FormRow'
 import CardStyle from '../components/CardStyle';
 
-export default class LoginPage extends React.Component {
+class LoginPage extends React.Component {
 
     constructor(props) {
         super(props);
@@ -46,55 +50,10 @@ export default class LoginPage extends React.Component {
     } 
     tryLogin() {
         this.setState({isLoading: true, message: ''});
-        const { mail, password } = this.state;
+        const { mail: email, password } = this.state;
 
-        const loginUserSucess = user => {
-            this.setState({
-                mail: '',
-                password: '',
-                message: ''
-            });
-            this.props.navigation.navigate('Main');
-        }
-
-        const loginUserFailed = error => {
-            this.setState({
-                message: this.getMessageByErrorCode(error.code)
-            });
-        }
-
-        firebase.auth()
-            .signInWithEmailAndPassword( mail, password )
-            .then( loginUserSucess )
-            .catch(error => {
-
-            if (error.code === 'auth/user-not-found') {
-                Alert.alert(
-                    'Usuário não encontrado',
-                    'Deseja se cadastrar com essas informações',
-                    [{
-                        text: 'Não',
-                        onPress: () => {},
-                        style: 'cancel' //IOS
-                    }, {
-                        text: 'Sim',
-                        onPress: () => {
-                            this.setState({isLoading: true});
-                            firebase.auth()
-                                .createUserWithEmailAndPassword(mail, password)
-                                .then( loginUserSucess )
-                                .catch( loginUserFailed )
-                                .then(() =>  this.setState({isLoading: false}));
-                                
-                        }
-                    }],
-                    { cancelable: false }
-                )
-                return ;
-            } 
-            loginUserFailed(error);              
-        })
-        .then(() => this.setState({isLoading: false}));
+        this.props.tryLogin({email, password});
+        
     } 
 
     getMessageByErrorCode(errorCode) {
@@ -105,6 +64,8 @@ export default class LoginPage extends React.Component {
                 return 'Usuário não permitido';
             case 'auth/wrong-password':
                 return 'Senha incorreta';
+            default:
+                return errorCode;
         }
     }
 
@@ -220,3 +181,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+
+export default connect(
+    null, 
+    { tryLogin }
+)(LoginPage);
