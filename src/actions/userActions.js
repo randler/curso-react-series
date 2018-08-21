@@ -1,6 +1,8 @@
-const USER_LOGIN = 'USER_LOGIN';
-const userLogin = user => ({
-    type: USER_LOGIN,
+import firebase from 'firebase';
+
+const USER_LOGIN_SUCCESS = 'USER_LOGIN_SUCCESS';
+const userLoginSuccess = user => ({
+    type: USER_LOGIN_SUCCESS,
     user
 });
 const USER_LOGOUT = 'USER_LOGOUT';
@@ -11,9 +13,12 @@ const userLogout = () => ({
 
 export const tryLogin = ({email, password}) => dispatch => {
     firebase.auth()
-        .signInWithEmailAndPassword( mail, password )
-        .then( loginUserSucess )
-        .catch(error => {
+        .signInWithEmailAndPassword( email, password )
+        .then( user => {
+            const action = userLoginSuccess(user);
+            dispatch(action);
+        });
+        /*.catch(error => {
 
         if (error.code === 'auth/user-not-found') {
             Alert.alert(
@@ -41,5 +46,5 @@ export const tryLogin = ({email, password}) => dispatch => {
         } 
         loginUserFailed(error);              
     })
-    .then(() => this.setState({isLoading: false}));
+    .then(() => this.setState({isLoading: false}));*/
 }
