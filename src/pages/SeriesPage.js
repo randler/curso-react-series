@@ -9,8 +9,10 @@ const SeriesPage = props => (
     <View >
         <FlatList
             data={series}
-            renderItem={({item}) => (
-            <SerieCard serie={item} />
+            renderItem={({item, index }) => (
+            <SerieCard 
+                serie={item}
+                isFirstColumn={index%2==0} />
         )}
         keyExtractor={item => item.id} 
         numColumns={2}

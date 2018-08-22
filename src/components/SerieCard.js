@@ -9,10 +9,13 @@ import {
 } from 'react-native';
 
 // create a component
-const SerieCard = ({ serie }) => {
+const SerieCard = ({ serie, isFirstColumn }) => {
     return (
-        <View style={styles.container}>
-            <View style={styles.line} >
+        <View style={[
+                styles.container, 
+                isFirstColumn ? styles.firstColumn : styles.lastColumn
+            ]}>
+            <View style={styles.card} >
                 <Image
                     style={styles.imageItem} 
                     source={{uri: serie.img}}
@@ -28,11 +31,24 @@ const SerieCard = ({ serie }) => {
 // define your styles
 const styles = StyleSheet.create({
     container: {
+        //Solução 1
+        width: '50%',
         padding: 5,
-        flex: 1,
+
+        //Solução 2
+        //flex: .5,
+        
         height: Dimensions.get('window').width / 2,
     },
-    line: {
+    firstColumn: {
+        paddingRight: 2.5,
+    },
+    lastColumn: {
+        paddingLeft: 2.5,
+    },
+    card: {
+        //Solução
+        //margin: 5,
         marginHorizontal: 5,
         marginBottom: 5,
         backgroundColor: '#FFF',
