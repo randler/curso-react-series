@@ -17,34 +17,31 @@ export const tryLogin = ({email, password}) => dispatch => {
         .then( user => {
             const action = userLoginSuccess(user);
             dispatch(action);
-        });
-        /*.catch(error => {
+        })
+        .catch(error => {
 
-        if (error.code === 'auth/user-not-found') {
-            Alert.alert(
-                'Usuário não encontrado',
-                'Deseja se cadastrar com essas informações',
-                [{
-                    text: 'Não',
-                    onPress: () => {},
-                    style: 'cancel' //IOS
-                }, {
-                    text: 'Sim',
-                    onPress: () => {
-                        this.setState({isLoading: true});
-                        firebase.auth()
-                            .createUserWithEmailAndPassword(mail, password)
-                            .then( loginUserSucess )
-                            .catch( loginUserFailed )
-                            .then(() =>  this.setState({isLoading: false}));
-                            
-                    }
-                }],
-                { cancelable: false }
-            )
-            return ;
-        } 
-        loginUserFailed(error);              
-    })
-    .then(() => this.setState({isLoading: false}));*/
+            if (error.code === 'auth/user-not-found') {
+                Alert.alert(
+                    'Usuário não encontrado',
+                    'Deseja se cadastrar com essas informações',
+                    [{
+                        text: 'Não',
+                        onPress: () => {},
+                        style: 'cancel' //IOS
+                    }, {
+                        text: 'Sim',
+                        onPress: () => {
+                            firebase.auth()
+                                .createUserWithEmailAndPassword(email, password)
+                                .then( loginUserSucess )
+                                .catch( loginUserFailed )
+                                
+                        }
+                    }],
+                    { cancelable: false }
+                )
+                return ;
+            } 
+            loginUserFailed(error);              
+        });
 }
