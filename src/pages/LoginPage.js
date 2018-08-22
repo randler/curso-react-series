@@ -53,11 +53,20 @@ class LoginPage extends React.Component {
         const { mail: email, password } = this.state;
 
         this.props.tryLogin({email, password})
-            .then( () =>{
-                this.setState({message: 'Sucesso!'});
-                this.props.navigation.replace('Main');
-            }).catch( error =>{
-                
+            .then((user) => {
+                if (user)
+                  return this.props.navigation.replace('Main');  
+
+                this.setState({
+                    isLoading: false,
+                    message: ''
+                });
+            })
+            .catch( error =>{
+                this.setState({
+                    isLoading: false, 
+                    message: this.getMessageByErrorCode(error)
+                });
             });
         
     } 
@@ -69,7 +78,7 @@ class LoginPage extends React.Component {
             case 'auth/user-disabled':
                 return 'Usuário não permitido';
             case 'auth/wrong-password':
-                return 'Senha incorreta';
+                return 'Senha e/ou Email incorreto(s)';
             default:
                 return errorCode;
         }
