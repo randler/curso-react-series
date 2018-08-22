@@ -15,6 +15,7 @@ export default createStackNavigator({
     'Main': {
         screen: SeriesPage,
         navigationOptions: {
+            title: "Minhas Series",
             headerTitleStyle: {
                 color: '#2e333d',
                 fontSize: 30,
@@ -30,7 +31,7 @@ export default createStackNavigator({
                 fontSize: 30,
             }
         }
-    }
+    },
 }, {
   navigationOptions: {
       title: 'Series',
