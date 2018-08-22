@@ -19,29 +19,29 @@ export const tryLogin = ({email, password}) => dispatch => {
             dispatch(action);
         })
         .catch(error => {
-
             if (error.code === 'auth/user-not-found') {
-                Alert.alert(
-                    'Usuário não encontrado',
-                    'Deseja se cadastrar com essas informações',
-                    [{
-                        text: 'Não',
-                        onPress: () => {},
-                        style: 'cancel' //IOS
-                    }, {
-                        text: 'Sim',
-                        onPress: () => {
-                            firebase.auth()
-                                .createUserWithEmailAndPassword(email, password)
-                                .then( loginUserSucess )
-                                .catch( loginUserFailed )
-                                
-                        }
-                    }],
-                    { cancelable: false }
-                )
-                return ;
+                return new Promise((resolve, reject) => {
+                    Alert.alert(
+                        'Usuário não encontrado',
+                        'Deseja se cadastrar com essas informações',
+                        [{
+                            text: 'Não',
+                            onPress: () => resolve(),
+                            style: 'cancel' //IOS
+                        }, {
+                            text: 'Sim',
+                            onPress: () => {
+                                firebase.auth()
+                                    .createUserWithEmailAndPassword(email, password)
+                                    .then(resolve)
+                                    .catch(reject)
+                                    
+                            }
+                        }],
+                        { cancelable: false }
+                    );
+                });
             } 
-            loginUserFailed(error);              
+            return Promise.reject(error.code);              
         });
 }
