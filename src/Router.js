@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation';
 import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import Register from './pages/Register';
+import SeriesPage from './pages/SeriesPage';
 
 export default createStackNavigator({
     'Login': {
@@ -12,7 +13,7 @@ export default createStackNavigator({
         }
     },
     'Main': {
-        screen: HomePage,
+        screen: SeriesPage,
         navigationOptions: {
             headerTitleStyle: {
                 color: '#2e333d',
