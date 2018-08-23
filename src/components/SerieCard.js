@@ -5,13 +5,16 @@ import {
     Text, 
     StyleSheet, 
     Image, 
-    Dimensions
+    Dimensions,
+    TouchableOpacity
 } from 'react-native';
 
 // create a component
-const SerieCard = ({ serie, isFirstColumn }) => {
+const SerieCard = ({ serie, isFirstColumn, onNavigate }) => {
     return (
-        <View style={[
+        <TouchableOpacity 
+            onPress={onNavigate}
+            style={[
                 styles.container, 
                 isFirstColumn ? styles.firstColumn : styles.lastColumn
             ]}>
@@ -24,7 +27,7 @@ const SerieCard = ({ serie, isFirstColumn }) => {
                     <Text style={styles.cardTitle}>{`${serie.id} - ${serie.title}`}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 

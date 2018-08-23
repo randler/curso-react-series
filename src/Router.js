@@ -4,14 +4,15 @@ import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import SeriesPage from './pages/SeriesPage';
+import SerieDetailPage from './pages/SerieDetailPage';
 
 export default createStackNavigator({
-    'Login': {
+    /*'Login': {
         screen: LoginPage,
         navigationOptions: {
             title: "Bem vindo!",
         }
-    },
+    },*/
     'Main': {
         screen: SeriesPage,
         navigationOptions: {
@@ -32,6 +33,19 @@ export default createStackNavigator({
             }
         }
     },
+    'SerieDetail': {
+        screen: SerieDetailPage,
+        navigationOptions: ({ navigation })=> {
+            const {serie} = navigation.state.params;
+            return {
+                title: serie.title,
+                headerTitleStyle: {
+                    color: '#2e333d',
+                    fontSize: 30,
+                }
+            }
+        }
+    }
 }, {
   navigationOptions: {
       title: 'Series',

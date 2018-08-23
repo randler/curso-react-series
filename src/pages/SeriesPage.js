@@ -12,7 +12,8 @@ const SeriesPage = props => (
             renderItem={({item, index }) => (
             <SerieCard 
                 serie={item}
-                isFirstColumn={index%2===0} />
+                isFirstColumn={index%2===0} 
+                onNavigate={() => props.navigation.navigate('SerieDetail', { serie: item })}/>
         )}
         keyExtractor={item => item.id} 
         numColumns={2}
