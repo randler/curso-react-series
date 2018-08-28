@@ -13,7 +13,7 @@ export default createStackNavigator({
             title: "Bem vindo!",
         }
     },*/
-    /*'Main': {
+    'Main': {
         screen: SeriesPage,
         navigationOptions: {
             title: "Minhas Series",
@@ -32,12 +32,11 @@ export default createStackNavigator({
                 fontSize: 30,
             }
         }
-    },*/
+    },
     'SerieDetail': {
         screen: SerieDetailPage,
         navigationOptions: ({ navigation })=> {
-            const serie = {title: 'Detalhe da serie'};
-            //const {serie} = navigation.state.params;
+            const {serie} = navigation.state.params;
             return {
                 title: serie.title,
                 headerTitleStyle: {
