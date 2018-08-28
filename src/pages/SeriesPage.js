@@ -14,6 +14,7 @@ const SeriesPage = props => (
             item.isLast ?
                 <AddSerieCard
                     isFirstColumn={index%2===0} 
+                    onPress={ () => props.navigation.navigate('SerieForm')}
                 /> :
                 <SerieCard 
                     serie={item}

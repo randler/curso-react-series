@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import Register from './pages/Register';
 import SeriesPage from './pages/SeriesPage';
 import SerieDetailPage from './pages/SerieDetailPage';
+import SerieFormPage from './pages/SerieFormPage';
 
 export default createStackNavigator({
     /*'Login': {
@@ -45,7 +46,17 @@ export default createStackNavigator({
                 }
             }
         }
-    }
+    },
+    'SerieForm': {
+        screen: SerieFormPage,
+        navigationOptions:{
+            title: 'Nova Serie',
+            headerTitleStyle: {
+                color: '#2e333d',
+                fontSize: 30,
+            }
+        }
+    },
 }, {
   navigationOptions: {
       title: 'Series',
