@@ -30,10 +30,10 @@ class SerieDetailPage extends Component {
                     <Line label={'Nota:'} content={serie.rate}/>
                     <LongText label={'Descrição:'} content={serie.description}/>
                 </View>
-                <TouchableOpacity 
+                {/*<TouchableOpacity 
                     style={styles.buttonEpisodios}>
                     <Text style={styles.textButton}>Episódios</Text>
-                </TouchableOpacity>
+                </TouchableOpacity>*/}
             </ScrollView>
         );
     }

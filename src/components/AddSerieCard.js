@@ -19,11 +19,9 @@ const AddSerieCard = ({ serie, isFirstColumn, onNavigate }) => {
                 isFirstColumn ? styles.firstColumn : styles.lastColumn
             ]}>
             <View style={styles.card} >
-                {/*<Image
+                <Image
                     style={styles.imageItem} 
-                    source={{uri: serie.img}}
-                resizeMode="cover" />*/}
-                <Text>Teste para adicionar botão</Text>
+                    source={require('../../resources/img/plus.png')} />
             </View>
         </TouchableOpacity>
     );
@@ -58,6 +56,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     imageItem: {
+        width: '100%',
+        height: '100%',
         flex: 4,
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,

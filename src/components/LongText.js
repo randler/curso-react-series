@@ -43,7 +43,7 @@ export default class LongText extends React.Component {
                     styles.label,
                     ]}>{ label }</Text>
             <TouchableWithoutFeedback 
-                onPress={ () => this.toggleIsExpanded} >
+                onPress={ () => this.toggleIsExpanded()} >
                 <View>
                     <Text style={[
                         styles.cell, 
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     collapsed: {
-        maxHeight: 60
+        maxHeight: 70
     },
     expanded: {
         flex: 1
