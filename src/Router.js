@@ -8,13 +8,13 @@ import SerieDetailPage from './pages/SerieDetailPage';
 import SerieFormPage from './pages/SerieFormPage';
 
 export default createStackNavigator({
-    /*'Login': {
+    'Login': {
         screen: LoginPage,
         navigationOptions: {
             title: "Bem vindo!",
         }
-    },*/
-    'Main': {
+    },
+   'Main': {
         screen: SeriesPage,
         navigationOptions: {
             title: "Minhas Series",

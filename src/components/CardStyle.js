@@ -10,7 +10,9 @@ const CardStyle = props => {
                 <Image
                     style={styles.image} 
                     source={imagem === 'login' ?
-                                require('../assets/img/lock.png') :
+                                require('../assets/img/lock.png') : 
+                                imagem === 'new-serie' ?
+                                require('../assets/img/new-serie.png') :  
                                 require('../assets/img/register.png')} />
             </View>
             <View style={styles.cardLogin} >
@@ -28,6 +30,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
         padding: 5,
+        paddingTop: 25,
         borderWidth: 1,
         borderColor: '#C1C1C1',
         elevation: 1,

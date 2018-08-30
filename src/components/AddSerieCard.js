@@ -57,11 +57,9 @@ const styles = StyleSheet.create({
     },
     imageItem: {
         width: '100%',
-        height: '100%',
         flex: 4,
         borderTopLeftRadius: 5,
         borderTopRightRadius: 5,
-        marginBottom: 50,
     }
 });
 
